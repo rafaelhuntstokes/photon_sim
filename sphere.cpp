@@ -113,7 +113,7 @@ void sphere(){
     top->Draw();
 
     // now GENERATE EVENTS 
-    int num_events = 1;
+    int num_events = 3;
     plot_event(num_events); 
 };
 
