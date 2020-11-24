@@ -10,6 +10,7 @@
 #include <math.h>
 #include <array>
 using namespace std; 
+
 void plot_event(int num_events){
     
     // initialise a list of Event objects of a given number

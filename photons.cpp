@@ -26,10 +26,7 @@
 #include "TStyle.h"
 #include "TSystem.h"
 #include "TVector3.h"
-
-
 using namespace std; 
-
 
 class Event {
     // private data members
@@ -39,6 +36,7 @@ class Event {
     float pi = TMath::Pi();
     vector < TVector3 > gamma_dirs; // array of vectors, each element is a polar 3D vector  
     vector < TVector3 > intercepts; // array of vectors, each element is photon/sphere intercept coords
+    vector <float> time_of_flight;  // vector stores time of flight information 
 
     // experimenting with using ROOT 3D physics vectors instead of C++
     TVector3 event_position; 
@@ -83,10 +81,8 @@ class Event {
             gammaDir();
 
             // find intercept of photon direction and PMT sphere 
-            // create an array of ROOT 3D polar vectors which store the photon/PMT intercepts
-            // and calculate the time of flight and store in a C-array 
-            float time_of_flight[num_photons]; 
-            gammaIntercept(time_of_flight); 
+            // and calculate the time of flight and store in a vector 
+            gammaIntercept(); 
 
             // print out the calculated intercepts 
             puts("INTERCEPTS AT: \n");
@@ -125,7 +121,7 @@ class Event {
             };
         }; 
 
-        void gammaIntercept(float *time_of_flights){
+        void gammaIntercept(){
             // calculates the intercept of photon and PMTs
             /* Takes a POINTER to the empty fixed-size C-array container interceptsand time of flights. By default, the pointer 
             points to the first element of intercepts. The pointer itself is incremented at the end of the 
@@ -165,10 +161,7 @@ class Event {
                 
                 // calculate time of flight and assign to correct array element
                 tof = d / pow(3,8); 
-                *time_of_flights = tof; 
-
-                // increment pointer to point at next element of intercepts
-                ++time_of_flights;   
+                time_of_flight.push_back(tof); 
             };
         };
 
